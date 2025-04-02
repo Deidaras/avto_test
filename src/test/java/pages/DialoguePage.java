@@ -1,4 +1,4 @@
-package HW4.pages;
+package pages;
 
 import com.codeborne.selenide.SelenideElement;
 
@@ -9,6 +9,8 @@ public class DialoguePage {
         return $x("//div[@class=\"js-lottie-observer\"]");
     }
 
-
+    public SelenideElement exitDialogue() {
+        return $x("//div[@data-l=\"t,closeLayer\"]");
+    }
 
 }

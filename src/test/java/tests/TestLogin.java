@@ -1,8 +1,8 @@
-package HW4.tests;
+package tests;
 
 import org.junit.jupiter.api.Test;
-import HW4.pages.LoginPage;
-import HW4.pages.UserPage;
+import pages.LoginPage;
+import pages.FeedPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,10 +21,10 @@ public class TestLogin {
         open(url);
 
         LoginPage loginPage = new LoginPage();
-        UserPage userPage = new UserPage();
+        FeedPage feedPage = new FeedPage();
 
         loginPage.login(username, password);
 
-        assertEquals(expectedUsername, userPage.getLoggedInUserName());
+        assertEquals(expectedUsername, feedPage.getLoggedInUserName());
     }
 }
