@@ -1,10 +1,13 @@
 // тест отправления сообщения и проверки отправки
 
-package tests;
+package HW4.tests;
 
+import HW4.pages.AllPages;
+import HW4.pages.DialoguePage;
+import HW4.pages.LoginPage;
+import HW4.pages.MessagesPage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import pages.*;
 
 import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Condition.empty;

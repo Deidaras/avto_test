@@ -1,4 +1,4 @@
-package pages;
+package HW4.pages;
 
 import com.codeborne.selenide.SelenideElement;
 

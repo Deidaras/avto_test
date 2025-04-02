@@ -1,8 +1,8 @@
-package tests;
+package HW4.tests;
 
 import org.junit.jupiter.api.Test;
-import pages.LoginPage;
-import pages.UserPage;
+import HW4.pages.LoginPage;
+import HW4.pages.UserPage;
 
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.api.Assertions.assertEquals;
