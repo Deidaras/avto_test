@@ -1,4 +1,4 @@
-package HW4.pages;
+package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$x;
@@ -6,15 +6,15 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class LoginPage {
     public SelenideElement loginField() {
-        return $x("//*[@id=\"field_email\"]");
+        return $x("//input[@id=\"field_email\"]");
     }
 
     public SelenideElement passwordField() {
-        return $x("//*[@id=\"field_password\"]");
+        return $x("//input[@id=\"field_password\"]");
     }
 
     public SelenideElement loginButton() {
-        return $x("//*[@class=\"login-form-actions\"]/input");
+        return $x("//div[@class=\"login-form-actions\"]/input");
     }
 
     public void login(String username, String password) {
@@ -22,5 +22,7 @@ public class LoginPage {
         passwordField().setValue(password);
         loginButton().click();
     }
+
+
 
 }

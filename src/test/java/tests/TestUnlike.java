@@ -1,8 +1,8 @@
-package HW4.tests;
+package tests;
 
-import HW4.pages.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import pages.*;
 
 import static com.codeborne.selenide.Condition.cssClass;
 import static com.codeborne.selenide.Selenide.open;
@@ -13,7 +13,7 @@ public class TestUnlike {
     AllPages allPages;
     MessagesPage messagesPage;
     DialoguePage dialoguePage;
-    UserPage userPage;
+    FeedPage feedPage;
 
     @BeforeEach
     public void before() {
@@ -24,7 +24,7 @@ public class TestUnlike {
         allPages = new AllPages();
         messagesPage = new MessagesPage();
         dialoguePage = new DialoguePage();
-        userPage = new UserPage();
+        feedPage = new FeedPage();
 
         open(url);
         loginPage.login(username, password);
@@ -33,14 +33,14 @@ public class TestUnlike {
     @Test
     public void testLike() {
 
-        if (!userPage.likeFirstNews().getAttribute("class").contains("__active")) {
-            userPage.likeFirstNews().click();
-            userPage.activeLikeFirstNews().shouldHave(cssClass("__active"));
-            userPage.likeFirstNews().click();
-            userPage.activeLikeFirstNews().shouldNotHave((cssClass("__active")));
+        if (!feedPage.likeFirstNews().getAttribute("class").contains("__active")) {
+            feedPage.likeFirstNews().click();
+            feedPage.activeLikeFirstNews().shouldHave(cssClass("__active"));
+            feedPage.likeFirstNews().click();
+            feedPage.activeLikeFirstNews().shouldNotHave((cssClass("__active")));
         } else {
-            userPage.likeFirstNews().click();
-            userPage.activeLikeFirstNews().shouldNotHave((cssClass("__active")));
+            feedPage.likeFirstNews().click();
+            feedPage.activeLikeFirstNews().shouldNotHave((cssClass("__active")));
         }
 
     }

@@ -1,9 +1,9 @@
-package HW4.tests;
+package tests;
 
-import HW4.pages.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import pages.*;
 
 import static com.codeborne.selenide.Condition.cssClass;
 import static com.codeborne.selenide.Selenide.open;
@@ -14,7 +14,7 @@ public class TestLike {
     AllPages allPages;
     MessagesPage messagesPage;
     DialoguePage dialoguePage;
-    UserPage userPage;
+    FeedPage feedPage;
     private int index;
 
     @BeforeEach
@@ -26,7 +26,7 @@ public class TestLike {
         allPages = new AllPages();
         messagesPage = new MessagesPage();
         dialoguePage = new DialoguePage();
-        userPage = new UserPage();
+        feedPage = new FeedPage();
 
         open(url);
         loginPage.login(username, password);
@@ -38,20 +38,20 @@ public class TestLike {
         index = 1;
         boolean foundNonActive = false;
 
-        while (index < userPage.collectionLikes().size() && !foundNonActive) {
-            if (!userPage.collectionsActiveLike().get(index).getAttribute("class").contains("__active")) {
-                userPage.collectionsActiveLike().get(index).click();
+        while (index < feedPage.collectionLikes().size() && !foundNonActive) {
+            if (!feedPage.collectionsActiveLike().get(index).getAttribute("class").contains("__active")) {
+                feedPage.collectionsActiveLike().get(index).click();
                 foundNonActive = true;
             }
             index++;
         }
         index -=1;
-        userPage.collectionsActiveLike().get(index).shouldHave((cssClass("__active")));
+        feedPage.collectionsActiveLike().get(index).shouldHave((cssClass("__active")));
 
     }
 
     @AfterEach
         public void deleteLikes() {
-        userPage.collectionsActiveLike().get(index).click();
+        feedPage.collectionsActiveLike().get(index).click();
         }
 }

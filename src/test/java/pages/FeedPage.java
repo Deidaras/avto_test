@@ -1,4 +1,4 @@
-package HW4.pages;
+package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
@@ -6,13 +6,13 @@ import com.codeborne.selenide.SelenideElement;
 import static com.codeborne.selenide.Selenide.$$x;
 import static com.codeborne.selenide.Selenide.$x;
 
-public class UserPage {
+public class FeedPage {
     public SelenideElement userName() {
-        return $x("//*[@class=\"tico ellip\"]");
+        return $x("//div[@class=\"tico ellip\"]");
     }
 
-    public String getLoggedInUserName() {
-        return userName().getText();
+    public SelenideElement firstNews() {
+        return $x("//div[contains(@class, \"feed\") and contains(@class, \"__header-redesign\")]");
     }
 
     // локатор для взаимодействия с первым лайком
@@ -33,5 +33,11 @@ public class UserPage {
     public ElementsCollection collectionsActiveLike() {
         return $$x("//span[@data-like-icon=\"like\"]/..");
     }
+
+    public SelenideElement profileSettings() {
+        return  $x("//button[contains(@class,\"toolbar_ucard\")]");
+    }
+
+
 
 }
