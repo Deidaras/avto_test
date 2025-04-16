@@ -1,57 +1,45 @@
 package tests;
 
+import com.codeborne.selenide.ElementsCollection;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
 import pages.*;
 
-import static com.codeborne.selenide.Condition.cssClass;
-import static com.codeborne.selenide.Selenide.open;
+import static org.junit.jupiter.api.Assertions.fail;
 
-public class TestLike {
-    private static final String url = "https://ok.ru";
-    LoginPage loginPage;
-    AllPages allPages;
-    MessagesPage messagesPage;
-    DialoguePage dialoguePage;
+public class TestLike extends BaseTest {
     FeedPage feedPage;
-    private int index;
-
-    @BeforeEach
-    public void before() {
-        String username = "technopol42";
-        String password = "technopolisPassword";
-
-        loginPage = new LoginPage();
-        allPages = new AllPages();
-        messagesPage = new MessagesPage();
-        dialoguePage = new DialoguePage();
-        feedPage = new FeedPage();
-
-        open(url);
-        loginPage.login(username, password);
-    }
+    private int index = -1;
 
     @Test
     public void testLike() {
+        feedPage = new FeedPage();
 
-        index = 1;
-        boolean foundNonActive = false;
+        ElementsCollection collectionLikes = feedPage.collectionLikes();
 
-        while (index < feedPage.collectionLikes().size() && !foundNonActive) {
-            if (!feedPage.collectionsActiveLike().get(index).getAttribute("class").contains("__active")) {
-                feedPage.collectionsActiveLike().get(index).click();
-                foundNonActive = true;
-            }
-            index++;
+        if (collectionLikes.isEmpty()) {
+            fail("На странице нет неактивных лайков");
+            return;
         }
-        index -=1;
-        feedPage.collectionsActiveLike().get(index).shouldHave((cssClass("__active")));
 
+        int elementsToCheck = Math.min(10, collectionLikes.size());
+        for (int i = 0; i < elementsToCheck; i++) {
+            if (!feedPage.collectionLikeStatusElementActive(i)) {
+                feedPage.collectionLikeStatusElementClick(i);
+                index = i;
+                break;
+            }
+        }
+
+        feedPage.collectionLikeShouldHaveLike(index);
+
+        if (index == -1) {
+            fail("Не найдено не активных лайков");
+        }
     }
 
     @AfterEach
         public void deleteLikes() {
-        feedPage.collectionsActiveLike().get(index).click();
+        feedPage.collectionLikeStatusElementClick(index);
         }
 }
