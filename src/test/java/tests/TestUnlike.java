@@ -6,15 +6,15 @@ import pages.*;
 public class TestUnlike extends BaseTest {
 
     @Test
-    public void testLike() {
+    public void testUnlike() {
         FeedPage feedPage = new FeedPage();
 
-        if (!feedPage.activeLikeStatusFirstNews()) {
-            feedPage.firstNewsClick();
-            feedPage.statusLike(feedPage.firstNews());
-        }
-        feedPage.firstNewsClick();
-        feedPage.statusLike(feedPage.firstNews());
+        feedPage.firstLikeCheck();
+        feedPage.firstLikeClick();
+        feedPage.firstLikeStatusCheck();
+
+        feedPage.firstLikeClick();
+        feedPage.firstUnlikeStatusCheck();
     }
 }
 

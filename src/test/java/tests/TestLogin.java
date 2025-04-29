@@ -4,11 +4,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.FeedPage;
 
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class TestLogin extends BaseTest {
-    private static final String expectedUsername = "technopol42 technopol42";
+    private static final String expectedUsername = dotenv.get("EXPECTEDUSERNAME");
 
     private static final String feedMenuRus = "Лента";
     private static final String hobbyMenuRus = "Увлечения";
@@ -25,6 +24,8 @@ class TestLogin extends BaseTest {
     @Test
     public void testSuccessfulLogin() {
         FeedPage feedPage = new FeedPage();
+
+        assertNotNull(expectedUsername, "EXPECTEDUSERNAME не задан в .env");
 
         assertAll("Menu",
                 // check user's name
