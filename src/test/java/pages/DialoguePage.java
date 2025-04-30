@@ -2,30 +2,29 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.empty;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
 public class DialoguePage {
-    public SelenideElement inputLine() {
-        return $x("//div[@class=\"js-lottie-observer\"]").shouldBe(visible.because("Элемент кнопки строки для ввода не найден"));
-    }
+    private static final By INPUTLINE = By.xpath("//div[@class=\"js-lottie-observer\"]");
+    private static final By EXITDIALOGUE = By.xpath("//div[@data-l=\"t,closeLayer\"]");
+
+
     public void inputLineClick() {
-        inputLine().click();
+        $(INPUTLINE).shouldBe(visible.because("Элемент кнопки строки для ввода не найден")).click();
     }
     public void inputLineEnter(String message) {
-        inputLine().setValue(message).pressEnter();
+        $(INPUTLINE).shouldBe(visible.because("Элемент кнопки строки для ввода не найден")).setValue(message).pressEnter();
     }
     public void inputLineEmpty() {
-        inputLine().shouldBe(empty);
+        $(INPUTLINE).shouldBe(visible.because("Элемент кнопки строки для ввода не найден")).shouldBe(empty);
     }
 
-    public SelenideElement exitDialogue() {
-        return $x("//div[@data-l=\"t,closeLayer\"]");
-    }
     public void exitDialogueClick() {
-        exitDialogue().shouldBe(visible.because("Элемент кнопки выхода из диалога не найден")).click();
+        $(EXITDIALOGUE).shouldBe(visible.because("Элемент кнопки выхода из диалога не найден")).click();
     }
 
 }
