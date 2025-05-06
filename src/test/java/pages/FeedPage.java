@@ -70,7 +70,7 @@ public class FeedPage implements Header, Sidebar {
         return  $x("//button[contains(@class,\"toolbar_ucard\")]");
     }
 
-    public void firstLikeCheck() {
+    public void firstLikeCheckAndDeactivate() {
         if (activeLikeStatusFirst()) {
             firstLikeClick();
         }

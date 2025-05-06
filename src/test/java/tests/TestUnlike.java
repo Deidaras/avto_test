@@ -9,7 +9,7 @@ public class TestUnlike extends BaseTest {
     public void testUnlike() {
         FeedPage feedPage = new FeedPage();
 
-        feedPage.firstLikeCheck();
+        feedPage.firstLikeCheckAndDeactivate();
         feedPage.firstLikeClick();
         feedPage.firstLikeStatusCheck();
 
