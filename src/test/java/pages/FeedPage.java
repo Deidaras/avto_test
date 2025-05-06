@@ -2,46 +2,46 @@ package pages;
 
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 import pages.components.Header;
 import pages.components.Sidebar;
 
 import static com.codeborne.selenide.CollectionCondition.sizeGreaterThanOrEqual;
 import static com.codeborne.selenide.Condition.cssClass;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$$x;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
 public class FeedPage implements Header, Sidebar {
+//    private static final Logger LOGGER = Logger.getLogger();
+    private static final By USERNAME = By.xpath("//div[@class=\"tico ellip\"]");
+    private static final By FIRSTNEW = By.xpath("//div[contains(@class, \"feed\") and contains(@class, \"__header-redesign\")]");
+    private static final By FIRSTLIKE = By.xpath("//span[@data-like-icon=\"like\"]");
+    private static final By FIRSTLIKESTATUS = By.xpath("//span[@data-like-icon=\"like\"]/..");
 
-    public SelenideElement userName() {
-        return $x("//div[@class=\"tico ellip\"]");
-    }
+    // имя юзера на боковом меню
     public String userNameGetText() {
-        return (userName().shouldBe(visible.because("Элемент имени юзера не найден")).text());
+        return ($(USERNAME).shouldBe(visible.because("Элемент имени юзера не найден")).text());
     }
-
-    public SelenideElement firstNews() {
-        return $x("//div[contains(@class, \"feed\") and contains(@class, \"__header-redesign\")]");
-    }
+    // видимость первой новости
     public void firstNewsVisible() {
-        firstNews().shouldBe(visible.because("Элемент первой новости не найден"));
-    }
-    public void firstNewsClick() {
-        firstNews().shouldBe(visible.because("Элемент первой новости не найден")).click();
+        $(FIRSTNEW).shouldBe(visible.because("Элемент первой новости не найден"));
     }
 
-    // локатор для взаимодействия с первым лайком
-    public SelenideElement likeFirstNews() {
-        return $x("//span[@data-like-icon=\"like\"]");
-    }
 
-    // локатор для определения активности первого лайка
-    public boolean activeLikeStatusFirstNews() {
-        return $x("//span[@data-like-icon=\"like\"]/..").shouldBe(visible.because("Элемент лайка при проверке активности лайка не найден")).getAttribute("class").contains("__active");
+    // нажать на первый лайк
+    public void firstLikeClick() {
+        $(FIRSTLIKE).shouldBe(visible.because("Элемент первого лайка не найден")).click();
     }
-    // проверка элемента коллекции на активность
-    public boolean statusLike(SelenideElement element) {
-        return (element.getAttribute("class").contains("__active"));
+    // статус первого лайка, true - нажат, false - нет
+    public boolean activeLikeStatusFirst() {
+        return ($(FIRSTLIKESTATUS).shouldBe(visible.because("Элемент лайка при проверке активности лайка не найден")).getAttribute("class").contains("__active"));
+    }
+    // статус первого лайка через shouldHave
+    public void firstLikeStatusCheck() {
+        $(FIRSTLIKESTATUS).shouldBe(visible.because("Элемент лайка при проверке активности лайка не найден")).shouldHave((cssClass("__active")));
+    }
+    public void firstUnlikeStatusCheck() {
+        $(FIRSTLIKESTATUS).shouldBe(visible.because("Элемент лайка при проверке активности лайка не найден")).shouldNotHave((cssClass("__active")));
     }
 
 
@@ -53,7 +53,6 @@ public class FeedPage implements Header, Sidebar {
     public ElementsCollection collectionLikeStatus() {
         return $$x("//span[@data-like-icon=\"like\"]/..").shouldHave(sizeGreaterThanOrEqual(0));
     }
-
     // проверить активность лайка по индексу возвращает boolean
     public Boolean collectionLikeStatusElementActive(Integer index) {
         return (collectionLikeStatus().get(index).shouldBe(visible.because("Элемент лайка при проверке активности лайка не найден")).getAttribute("class").contains("__active"));
@@ -69,5 +68,11 @@ public class FeedPage implements Header, Sidebar {
     //
     public SelenideElement profileSettings() {
         return  $x("//button[contains(@class,\"toolbar_ucard\")]");
+    }
+
+    public void firstLikeCheckAndDeactivate() {
+        if (activeLikeStatusFirst()) {
+            firstLikeClick();
+        }
     }
 }

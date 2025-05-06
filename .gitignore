@@ -15,6 +15,10 @@ build/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+.idea
+
+src/test/resources/.env
+.env
 
 ### Eclipse ###
 .apt_generated

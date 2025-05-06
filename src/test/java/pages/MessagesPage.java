@@ -1,17 +1,17 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.$;
 
 public class MessagesPage {
-    public SelenideElement dialogWithBot32() {
-        return $x("//msg-chats-list-item[@data-item-id=\"3359955742\"]").shouldBe(visible.because("Элемент кнопки диалога с ботом technopol32 technopol32 не найден"));
-    }
+    private static final By DIALOGWITHBOT32 = By.xpath("//msg-chats-list-item[@data-item-id=\"3359955742\"]");
+
 
     public void dialogWithBot32Click() {
-        dialogWithBot32().click();
+        $(DIALOGWITHBOT32).shouldBe(visible.because("Элемент кнопки диалога с ботом technopol32 technopol32 не найден")).click();
     }
 
 
