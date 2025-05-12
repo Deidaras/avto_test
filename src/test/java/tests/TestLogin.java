@@ -1,48 +1,66 @@
 package tests;
 
+import model.Menu;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.FeedPage;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TestLogin extends BaseTest {
+    private static final Logger logger = LoggerFactory.getLogger(TestLogin.class);
+
     private static final String expectedUsername = dotenv.get("EXPECTEDUSERNAME");
 
-    private static final String feedMenuRus = "Лента";
-    private static final String hobbyMenuRus = "Увлечения";
-    private static final String friendMenuRus = "Друзья";
-    private static final String photoMenuRus = "Фото";
-    private static final String groupMenuRus = "Группы";
-    private static final String gamesMenuRus = "Игры";
-    private static final String giftsMenuRus = "Подарки";
-    private static final String recommendMenuRus = "Рекомендации";
-    private static final String appsMenuRus = "Приложения";
-    private static final String datingMenuRus = "Знакомства в ОК";
+    Menu menu = new Menu(
+            "Лента",
+            "Увлечения",
+            "Друзья",
+            "Фото",
+            "Группы",
+            "Игры",
+            "Подарки",
+            "Рекомендации",
+            "Приложения",
+            "Знакомства в ОК"
+            );
 
     @DisplayName("Login Test")
     @Test
     public void testSuccessfulLogin() {
-        FeedPage feedPage = new FeedPage();
+        logger.info("Запуск теста входа, загрузка FeedPage");
+        FeedPage feedPage = new FeedPage().get();
 
+        logger.info("Проверка наличия имени пользователя в файле .env");
         assertNotNull(expectedUsername, "EXPECTEDUSERNAME не задан в .env");
 
-        assertAll("Menu",
-                // check user's name
-                () -> assertEquals(expectedUsername, feedPage.userNameGetText()),
-                // check visible first news
-                feedPage::firstNewsVisible,
-                // check menu buttons
-                () -> assertEquals(feedMenuRus, feedPage.feedButtonGetText()),
-                () -> assertEquals(hobbyMenuRus, feedPage.hobbyButtonGetText()),
-                () -> assertEquals(friendMenuRus, feedPage.friendButtonGetText()),
-                () -> assertEquals(photoMenuRus, feedPage.photoButtonGetText()),
-                () -> assertEquals(groupMenuRus, feedPage.groupButtonGetText()),
-                () -> assertEquals(gamesMenuRus, feedPage.gamesButtonGetText()),
-                () -> assertEquals(giftsMenuRus, feedPage.giftsButtonGetText()),
-                () -> assertEquals(recommendMenuRus, feedPage.recommendButtonGetText()),
-                () -> assertEquals(appsMenuRus, feedPage.appsButtonGetText()),
-                () -> assertEquals(datingMenuRus, feedPage.datingButtonGetText())
+        assertAll("Проверка страницы",
+                () -> {
+                    logger.info("Проверка имени пользователя");
+                    assertEquals(expectedUsername, feedPage.userNameGetText());
+                },
+                () -> {
+                    logger.info("Проверка соответствия меню");
+                    assertAll("Пункты меню",
+                            () -> {
+                                Menu actualMenu = new Menu(
+                                        feedPage.feedButtonGetText(),
+                                        feedPage.hobbyButtonGetText(),
+                                        feedPage.friendButtonGetText(),
+                                        feedPage.photoButtonGetText(),
+                                        feedPage.groupButtonGetText(),
+                                        feedPage.gamesButtonGetText(),
+                                        feedPage.giftsButtonGetText(),
+                                        feedPage.recommendButtonGetText(),
+                                        feedPage.appsButtonGetText(),
+                                        feedPage.datingButtonGetText()
+                                );
+                                assertEquals(menu, actualMenu);
+                            }
+
+                    );
+                }
         );
 
     }

@@ -1,15 +1,14 @@
 package pages.components;
 
-import com.codeborne.selenide.SelenideElement;
 
+import org.openqa.selenium.By;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.$;
 
 public interface Header {
-    default SelenideElement message() {
-        return $x("//*[@class=\"toolbar_nav_i_ic\"]");
-    }
+    By MESSAGE = By.xpath("//*[@class=\"toolbar_nav_i_ic\"]");
+
     default void messageClick() {
-        message().shouldBe(visible.because("Элемент кнопки сообщений не найден")).click();
+        $(MESSAGE).shouldBe(visible.because("Элемент кнопки сообщений не найден")).click();
     }
 }

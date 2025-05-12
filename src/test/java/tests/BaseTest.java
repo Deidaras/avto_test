@@ -31,6 +31,8 @@ public abstract class BaseTest {
         assertNotNull(password, "PASSWORD не задан в .env файле");
 
         open(url);
-        new LoginPage().login(username, password);
+        new LoginPage()
+                .get()
+                .login(username, password);
     }
 }

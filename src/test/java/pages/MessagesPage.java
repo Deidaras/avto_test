@@ -11,8 +11,9 @@ public class MessagesPage {
 
 
     public void dialogWithBot32Click() {
-        $(DIALOGWITHBOT32).shouldBe(visible.because("Элемент кнопки диалога с ботом technopol32 technopol32 не найден")).click();
+        $(DIALOGWITHBOT32)
+                .shouldBe(visible.because("Элемент кнопки диалога с ботом technopol32 technopol32 не найден"))
+                .click();
     }
-
 
 }
